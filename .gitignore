@@ -1,0 +1,23 @@
+# Private source material — not for publication
+_WhatsApp.pdf
+*.pdf
+
+# Local tool state (machine-specific permissions, not shareable)
+.claude/settings.local.json
+
+# OS / sync artifacts
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+*~
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Dependencies / build output (none today, but keeps the repo clean)
+node_modules/
+dist/
+.cache/
