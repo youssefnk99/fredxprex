@@ -1,92 +1,94 @@
-# FREDXPREX — New Brunswick Courier & Freight
+# FREDXPREX LTD. — site vitrine
 
 > *When Speed And Trust Travel Together*
 
-A modern, fully responsive, bilingual (EN/FR) marketing and self-service site for FREDXPREX,
-a 100% intra-provincial courier and freight network headquartered at
-**1318 Miramichi Ave, Bathurst, NB E2A 1Y2**.
+Site **descriptif** bilingue (FR/EN) pour Fredxprex Ltd., entreprise canadienne de
+transport et de logistique spécialisée dans la livraison du dernier kilomètre au
+Nouveau-Brunswick.
 
-No build step, no dependencies. Open `index.html` in a browser, or serve the folder.
+Aucune dépendance, aucune étape de compilation. Ouvrir `index.html` dans un navigateur,
+ou servir le dossier :
 
 ```
-python -m http.server 5173      # then visit http://localhost:5173
+python -m http.server 5173
 ```
 
 ---
 
-## Files
+## Fichiers
 
-| Path | Purpose |
+| Chemin | Rôle |
 | --- | --- |
-| `index.html` | Semantic HTML5, inline SVG icon sprite (Lucide-style paths) |
-| `assets/css/styles.css` | Design tokens, components, responsive + print + reduced-motion rules |
-| `assets/js/data.js` | NB geography, postal-code zones, hub coordinates, rate model |
-| `assets/js/i18n.js` | Full English / French dictionary (~250 keys, exact parity) |
-| `assets/js/app.js` | All interactivity — map, rate engine, tracking, modals, forms |
-| `.claude/launch.json` | Dev-server config for the preview tool. Safe to delete. |
+| `index.html` | Structure HTML5 sémantique, sprite d'icônes SVG en ligne |
+| `assets/css/styles.css` | Palette de la marque, composants, responsive, impression |
+| `assets/js/app.js` | Dictionnaire FR/EN, bascule de langue, menu, animations |
+| `assets/img/logo.png` | Logo officiel, fond transparent |
+| `assets/img/logo-light.png` | Variante claire pour le pied de page aubergine |
+| `assets/img/mark.png` | Le « F » seul, carré — favicon |
 
 ---
 
-## Features
+## Identité visuelle
 
-**Header / navigation** — Top bar with HQ address, dispatch line, email, hours and an
-EN/FR toggle. Sticky header with scroll-spy nav, a mobile drawer, and a `Ship Now` CTA.
+Les couleurs sont **échantillonnées directement dans le logo fourni** :
 
-**Hero** — Headline, slogan, and a three-tab widget: *Track*, *Get a Quote (NB postal codes)*,
-*Schedule Pickup*. Animated KPI counters below.
+| Rôle | Valeur |
+| --- | --- |
+| Aubergine (le « F », la route) | `#3E1742` |
+| Orange (le mot REDXPREX) | `#EA562E` |
 
-**Interactive NB map** — The province outline and 18 hubs are drawn from real
-latitude/longitude via an equirectangular projection, so hub positions and lane distances
-agree with the rate engine. Hubs are hoverable, tappable and keyboard-focusable; each
-reports its region and distance from the Bathurst HQ. Region cards cross-highlight their hubs.
+Deux variantes existent **uniquement pour l'accessibilité** — l'orange de la marque
+ne donne que 3,58:1 sur blanc, sous le seuil WCAG AA de 4,5:1 :
 
-**Rate estimator** — Distance-based pricing across four services, with volumetric weight,
-multi-piece, accessorials (residential, liftgate, signature, declared value), rural and
-Acadian Peninsula surcharges, a 14.5% fuel surcharge and 15% NB HST. Rejects any postal code
-outside New Brunswick and flags same-zone and overweight shipments.
+- `--orange-txt: #C43D18` — texte orange sur fond clair (5,21:1)
+- `--orange-btn: #C93F1A` — fond de bouton, texte blanc (4,99:1)
 
-**Tracking** — Enter any waybill number to get a shipment card: status pill, four-stage
-progress bar, origin/destination/weight/ETA, and a full scan history. Results are generated
-from a hash of the tracking number, so the *same number always returns the same shipment*.
+Le logo lui-même conserve toujours les couleurs exactes de la marque.
 
-**Leadership** — Direct phone and email for each director, for enterprise inquiries.
+**Motif signature :** la route à lignes discontinues du logo est réutilisée comme
+séparateur entre les sections, avec une animation de défilement (désactivée si le
+système demande un mouvement réduit).
 
-**Contact** — Validated contact form, head-office card, FAQ accordion, and a footer with
-sitemap, regional routes, and privacy / terms / claims / accessibility documents.
+Polices : **Archivo** (titres, rappelle le lettrage du logo) et **Inter** (texte).
 
 ---
 
-## Notes on the rate model
+## Contenu
 
-`assets/js/data.js` holds every tunable number in one place:
+Le texte français est celui fourni par la direction, repris mot pour mot. La version
+anglaise en est la traduction. Sections :
 
-```js
-SERVICES.sameday = { base: 34.95, perKm: 0.62, perKg: 1.45, minCharge: 42.00, ... }
-FEES = { fuelPct: 0.145, hstPct: 0.15, residential: 6.75, liftgate: 42.00, ... }
-```
+1. En-tête + bascule FR/EN
+2. Héros — nom, slogan, valeurs
+3. À propos — présentation, fondée en 2023
+4. Notre réseau — les 7 marchés
+5. Nos services — 6 offres
+6. Pourquoi Fredxprex — 4 engagements
+7. Développement + mission
+8. Grandissons ensemble
+9. Contact — direction et coordonnées
+10. Pied de page
 
-Lane distance is the great-circle distance × 1.28 (a New Brunswick road-winding factor) + 4 km.
-Adjust `SERVICES` and `FEES` to change pricing; nothing else needs to be touched.
-
-Postal codes resolve through an exact FSA table first, then a rule-based fallback, so any
-valid `E##` code lands on a sensible hub rather than being rejected.
-
----
-
-## Mock behaviour
-
-Tracking results, quotes and form submissions are **client-side simulations** — there is no
-back end. Every submit produces a reference number and a confirmation panel. To go live,
-replace the handlers in `app.js` (`runTracking`, `computeQuote`, and the `wireModalForm` /
-`initContactForm` submit branches) with real API calls.
+Les 7 marchés : Fredericton, Edmundston, Bathurst, Campbellton, Miramichi,
+Tracadie, Woodstock.
 
 ---
 
-## Accessibility
+## Modifier les contacts
 
-- Skip link, semantic landmarks, one `h1`, ordered heading outline
-- Every form control labelled; errors announced via `role="alert"` and `aria-invalid`
-- Modal focus trap, `Escape` to close, focus restored to the trigger
-- Keyboard-operable tabs (arrow keys), accordion, and map hubs
-- WCAG 2.1 AA contrast throughout
-- `prefers-reduced-motion` honoured; layouts reflow to 320px with no horizontal scroll
+Les personnes sont écrites directement dans `index.html`, section `#contact`
+(bloc `.person`). Le titre « Directeur Associé » passe par la clé `role.assoc`
+dans `assets/js/app.js` pour rester traduit.
+
+Pour changer un texte, cherchez son attribut `data-i18n` dans `index.html`, puis
+modifiez la clé correspondante **dans les deux langues** dans `app.js`.
+
+---
+
+## Accessibilité
+
+- Lien d'évitement, repères sémantiques, un seul `h1`, plan de titres ordonné
+- Navigation complète au clavier, anneaux de focus visibles
+- Contraste WCAG 2.1 AA vérifié sur l'ensemble du texte visible
+- `prefers-reduced-motion` respecté (animations et route figées)
+- Aucun défilement horizontal jusqu'à 320 px
