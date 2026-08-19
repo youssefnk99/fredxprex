@@ -331,10 +331,14 @@ h1, h2, h3 { margin: 0; font-family: var(--f-head); color: var(--ink); line-heig
 
 /* ============ CONTACT ============ */
 .person {
-  position: relative; overflow: hidden; padding: 1.9rem 1.6rem; text-align: center;
+  position: relative; overflow: hidden; padding: 1.9rem 1.4rem; text-align: center;
   background: #fff; border: 1px solid var(--line); border-radius: var(--r);
+  display: flex; flex-direction: column;
   transition: transform .28s var(--out), box-shadow .28s var(--out);
 }
+/* Les liens sont poussés en bas : les cartes restent alignées même quand
+   l'une d'elles n'a pas d'intitulé de poste. */
+.person__l:first-of-type { margin-top: auto; padding-top: .6rem; }
 .person::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: linear-gradient(90deg, var(--plum), var(--orange)); }
 .person:hover { transform: translateY(-6px); box-shadow: var(--sh); }
 .person__av {
